@@ -2,13 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
 	public function __construct()
 	{
 		$this->middleware('auth:api', ['except' => ['login']]);
+	}
+
+	/**
+	 * Register user with given credentials
+	 */
+	public function register(RegisterRequest $request): JsonResponse
+	{
+		User::create([
+			'email'    => $request->email,
+			'password' => Hash::make($request->password),
+		]);
+
+		return response()->json('User successfuly registered!', 200);
 	}
 
 	/**
@@ -29,9 +45,9 @@ class AuthController extends Controller
 	/**
 	 * Get the authenticated User.
 	 */
-	public function me(): JsonResponse
+	public function authorisedUser(): JsonResponse
 	{
-		return response()->json(auth()->user());
+		return response()->json(auth()->user(), 200);
 	}
 
 	/**
