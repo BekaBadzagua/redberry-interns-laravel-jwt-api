@@ -9,17 +9,13 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-	public function __construct()
-	{
-		$this->middleware('auth:api', ['except' => ['login']]);
-	}
-
 	/**
 	 * Register user with given credentials
 	 */
 	public function register(RegisterRequest $request): JsonResponse
 	{
 		User::create([
+			'name'     => $request->name,
 			'email'    => $request->email,
 			'password' => Hash::make($request->password),
 		]);
