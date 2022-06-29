@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-	return $request->user();
+Route::middleware('auth:api')->get('movies', function () {
+	// This route simulates returning movies from database
+
+	return response()->json([
+		['id' => 1, 'title'=> 'Pulp Fiction', 'year' => 1994],
+		['id' => 2, 'title'=> 'Full Metal Jacket', 'year' => 1987],
+		['id' => 3, 'title'=> 'The Godfather', 'year' => 1972],
+		['id' => 4, 'title'=> 'Kill Bill: Vol. 1', 'year' => 2003],
+	], 200);
 });
 
 Route::post('auth/login', 'AuthController@login');
