@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
@@ -26,13 +27,13 @@ class AuthController extends Controller
 	/**
 	 * Get a JWT via given credentials.
 	 */
-	public function login(): JsonResponse
+	public function login(LoginRequest $request): JsonResponse
 	{
-		$credentials = request(['email', 'password']);
+		$token = auth()->attempt($request->all());
 
-		if (!$token = auth()->attempt($credentials))
+		if (!$token)
 		{
-			return response()->json(['error' => 'Unauthorized'], 401);
+			return response()->json(['error' => 'User Does not exist!'], 404);
 		}
 
 		return $this->respondWithToken($token);
@@ -41,7 +42,7 @@ class AuthController extends Controller
 	/**
 	 * Get the authenticated User.
 	 */
-	public function authorisedUser(): JsonResponse
+	public function user(): JsonResponse
 	{
 		return response()->json(auth()->user(), 200);
 	}

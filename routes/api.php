@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +25,10 @@ Route::middleware('auth:api')->get('movies', function () {
 	], 200);
 });
 
-Route::post('auth/login', 'AuthController@login');
-Route::post('auth/register', 'AuthController@register');
-Route::post('auth/logout', 'AuthController@logout');
-Route::post('auth/refresh', 'AuthController@refresh');
-Route::post('auth/me', 'AuthController@me');
+Route::controller(AuthController::class)->group(function () {
+	Route::post('register', 'register');
+	Route::post('login', 'login');
+	Route::post('logout', 'logout');
+	Route::post('refresh-token', 'refresh');
+	Route::post('authorized-user', 'user');
+});
