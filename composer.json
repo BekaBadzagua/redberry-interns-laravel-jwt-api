@@ -50,8 +50,17 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "format": [
+        "format-only": [
             "./vendor/bin/php-cs-fixer fix"
+        ],
+        "format": [
+            "./vendor/bin/php-cs-fixer fix app",
+            "./vendor/bin/php-cs-fixer fix config",
+            "./vendor/bin/php-cs-fixer fix database",
+            "./vendor/bin/php-cs-fixer fix lang",
+            "./vendor/bin/php-cs-fixer fix resources",
+            "./vendor/bin/php-cs-fixer fix routes",
+            "./vendor/bin/php-cs-fixer fix tests"
         ]
     },
     "extra": {
