@@ -1,4 +1,4 @@
-# vee-validate-redberry-interns
+# JWT - Laravel API
 
 I created this application as a guideline for Redberry interns.
 
